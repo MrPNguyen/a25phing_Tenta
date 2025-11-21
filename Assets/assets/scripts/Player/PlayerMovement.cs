@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,12 @@ public class PlayerMovement : MonoBehaviour
     public bool canMove = true;
 
     public float DashPower = 5f;
+    
+    [SerializeField] private AudioSource walkingAudio;
+    //[SerializeField] private AudioSource walkingSnowAudio;
+    [SerializeField] private AudioSource JumpingAudio;
+    [SerializeField] private AudioSource LandingAudio;
+    
     void Start()
     {
          rb = GetComponent<Rigidbody2D>();
@@ -41,17 +48,19 @@ public class PlayerMovement : MonoBehaviour
         {
             spriteRenderer.flipX = true;
             animator.SetBool("isMoving", true);
+            
         }
         else if (rb.linearVelocity.x > 0)
         {
             spriteRenderer.flipX = false;
             animator.SetBool("isMoving", true);
-
+            
         }
         else
         {
             spriteRenderer.flipX = false;
             animator.SetBool("isMoving", false);
+            walkingAudio.Stop();
         }
     }
 
@@ -59,8 +68,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canMove)
         {
-           
             horizontalMovement = context.ReadValue<Vector2>().x;
+            walkingAudio.Play();
+            //TODO: Change walking audio depending on ground
+        }
+        else
+        {
+            walkingAudio.Stop();
         }
     }
 
@@ -74,21 +88,24 @@ public class PlayerMovement : MonoBehaviour
                 {
                     rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
                     animator.SetBool("isJumping", true);
+                    JumpingAudio.Play();
 
                 }
                 else if (context.canceled)
                 {
                     rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
                     animator.SetBool("isJumping", true);
+                    JumpingAudio.Play();
                 }
             }
             else
             {
                 animator.SetBool("isJumping", false);
+                LandingAudio.Play();
             }
         }
     }
-
+    
     public void Dash(InputAction.CallbackContext context)
     {
         if (canMove)

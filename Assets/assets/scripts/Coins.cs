@@ -15,8 +15,8 @@ public class Coins : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Hit");
             audioSource.Play();
+            Debug.Log("Hit");
             gameObject.SetActive(false);
             scoreManager.AddPoint();
         }
