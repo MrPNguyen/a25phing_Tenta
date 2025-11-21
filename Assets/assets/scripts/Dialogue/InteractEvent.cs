@@ -12,10 +12,15 @@ public class InteractEvent : MonoBehaviour
     {
         if (isInRange)
         {
+            interactText.SetActive(true);
             if (context.performed)
             {
                 interactAction.Invoke();
             }
+        }
+        else
+        {
+            interactText.SetActive(false);
         }
     }
     
@@ -24,7 +29,7 @@ public class InteractEvent : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isInRange = true;
-            interactText.SetActive(true);
+            
         }
     }
 
@@ -33,7 +38,6 @@ public class InteractEvent : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isInRange = false;
-            interactText.SetActive(false);
         }
     }
 }

@@ -13,8 +13,8 @@ public class Key : MonoBehaviour
             Debug.Log("Hit");
             KeyAudio.Play();
             doorAudio.Play();
-            gameObject.SetActive(false);
-            animator.SetBool("doorOpened", true);
+            animator.SetBool("isOpen", true);
+            Destroy(this.gameObject);
         }
     }
 }
