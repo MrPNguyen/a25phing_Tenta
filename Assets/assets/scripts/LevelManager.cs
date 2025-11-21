@@ -13,7 +13,7 @@ public class LevelManager : MonoBehaviour
 
     public void EndGame()
     {
-        Environment.Exit(0);
+        Application.Quit();
     }
     
     private void OnTriggerEnter2D(Collider2D other)
